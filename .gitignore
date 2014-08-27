@@ -1,0 +1,11 @@
+Temp
+Library
+.*
+!.gitignore
+*.booproj
+*.csproj
+*.sln
+unity.userprefs
+Thumbs.db
+Thumbs.db.meta
+build
