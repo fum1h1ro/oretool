@@ -69,7 +69,7 @@ class Server
         #p req.query_string
         #res.body = 'hoge'
       end
-      trap('INT') { @server.shutdown }
+      #trap('INT') { p self; @server.shutdown }
       @server.start
     end
   end
@@ -82,18 +82,29 @@ class Server
 
 
   def proc()
-    while buf = Readline.readline('> ', true)
-      case buf
-      when /^exit$/
-        break
+    stty_save = `stty -g`.chomp
+    trap('INT') { @server.shutdown; system "stty", stty_save; exit }
+    begin
+      while buf = Readline.readline('> ', true)
+        case buf
+        when /^exit$/
+          break
+        when /^help$/
+          print_help
+        else
+          printf("#{buf}\n")
+        end
       end
-      printf("#{buf}\n")
-      trap('INT') { break }
+    rescue Interrupt
+      system("stty", stty_save)
     end
-    @server_thread.join
+    @server.shutdown
+    #@server_thread.join
   end
 
-
+  def print_help
+    print 'help'
+  end
 end
 
 srv = Server.new(opts)
