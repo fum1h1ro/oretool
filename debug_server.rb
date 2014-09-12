@@ -92,6 +92,7 @@ class Server
         when /^help$/
           print_help
         else
+          system("rake ${buf}")
           printf("#{buf}\n")
         end
       end
