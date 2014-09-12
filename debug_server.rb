@@ -50,9 +50,9 @@ class Server
         :DocumentRoot => "#{@opts[:document_root]}",
         :Port => @opts[:port],
         :Logger => @logger,
-        #:AccessLog => [
-        #  [logname(@opts[:log_root]), WEBrick::AccessLog::CLF],
-        #],
+        :AccessLog => [
+          [@logger, WEBrick::AccessLog::CLF],
+        ],
       }
       @server = WEBrick::HTTPServer.new(config)
       @server.mount_proc('/api') do |req, res|

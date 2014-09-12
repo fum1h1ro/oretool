@@ -9,3 +9,4 @@ unity.userprefs
 Thumbs.db
 Thumbs.db.meta
 build
+*.log

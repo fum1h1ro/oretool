@@ -1,3 +1,5 @@
+require 'rake/clean'
+
 #DUMP_SPREADSHEET_RB = 'bundle exec ruby tool/dump_spreadsheet.rb'
 #DEBUG_SERVER_RB = 'bundle exec ruby oretool/debug_server.rb'
 DUMP_SPREADSHEET_RB = 'ruby dump_spreadsheet.rb'
@@ -6,6 +8,7 @@ UNITY_DIR = '../client'
 ASSETS_DIR = "#{UNITY_DIR}/Assets"
 STREAMINGASSETS_DIR = "#{ASSETS_DIR}/StreamingAssets"
 
+CLEAN.include('*.log')
 
 task :default => [:dump]
 
