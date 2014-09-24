@@ -15,11 +15,20 @@ task :default => [:dump]
 
 
 directory STREAMINGASSETS_DIR
+desc 'dump params'
 task :dump => STREAMINGASSETS_DIR do
-  sh "#{DUMP_SPREADSHEET_RB} -o #{STREAMINGASSETS_DIR}/spreadsheet.msgpack"
+  files = ['sd_params', 'sd_params_debug']
+  files.each do |fn|
+    sh "#{DUMP_SPREADSHEET_RB} --dump 'OinkGames/sd/#{fn}' -o #{STREAMINGASSETS_DIR}/#{fn}.msgpack"
+  end
 end
 
+desc 'copy sd_params'
+task :copy => STREAMINGASSETS_DIR do
+  sh "#{DUMP_SPREADSHEET_RB} --copy 'OinkGames/sd/sd_params' --dst 'OinkGames/sd/sd_params_debug'"
+end
 
+desc 'invoke server'
 task :server do
   sh "#{DEBUG_SERVER_RB} --document-root=#{STREAMINGASSETS_DIR}"
 end
