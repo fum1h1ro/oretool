@@ -14,7 +14,13 @@ Resolv::DNS.new(:search => Socket::gethostname).each_address(Socket::gethostname
 end
 =end
 
-ipaddr = IPSocket::getaddress(Socket::gethostname).split('.').map! { |v| v.to_i }
+addr = nil
+Socket::ip_address_list.each do |adrs|
+  if adrs.ipv4? and adrs.ipv4_private?
+    addr = adrs
+  end
+end
+ipaddr = addr.inspect_sockaddr.split('.').map! { |v| v.to_i }
 rootpath = File.dirname(File.expand_path($0))
 
 =begin
